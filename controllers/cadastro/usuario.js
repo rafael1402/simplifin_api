@@ -1,8 +1,5 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const {
-  LOG_DEBUG
-} = require("karma/lib/constants");
 const tokenParans = require('../../config/token-parans')
 const {
   OAuth2Client
