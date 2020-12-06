@@ -204,7 +204,6 @@ exports.verificaPeriodo = (req, res, next) => {
         }
 
         if (req.params.id) {
-
           Despesa.findOne({
             _criador: req.userData.usuarioId,
             _id: req.params.id
@@ -227,11 +226,9 @@ exports.verificaPeriodo = (req, res, next) => {
             res.status(500).json({
               mensagem: err,
               status: 'ER'
-            })
+            });
           });
-
         }
-        next();
       }
     })
   } catch (error) {

@@ -51,8 +51,9 @@ exports.atualizarTravaPeriodo = (req, res, next) => {
 
     TravaPeriodo.findOneAndUpdate({
       _criador: req.userData.usuarioId
-    }, travaPeriodo, {}, (err, retorno) => {
-
+    }, {
+      data: travaPeriodo.data
+    }, (err, retorno) => {
       if (err) {
         console.log(err)
         return res.status('500').json({
@@ -63,7 +64,7 @@ exports.atualizarTravaPeriodo = (req, res, next) => {
       }
 
       if (!retorno) {
-        TravaPeriodo.save().then(resultado => {
+        travaPeriodo.save().then(resultado => {
           return res.status(201).json({
             mensagem: 'Período atualizado com sucesso',
             status: 'OK',
@@ -77,13 +78,13 @@ exports.atualizarTravaPeriodo = (req, res, next) => {
             retorno: err
           });
         });
+      } else {
+        return res.status('200').json({
+          mensagem: 'Período atualizado com sucesso',
+          status: 'OK',
+          travaPeriodo: retorno
+        });
       }
-
-      return res.status('200').json({
-        mensagem: 'Período atualizado com sucesso',
-        status: 'OK',
-        travaPeriodo: retorno
-      });
     });
 
   } catch (err) {

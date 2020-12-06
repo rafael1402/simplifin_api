@@ -221,11 +221,9 @@ exports.verificaPeriodo = (req, res, next) => {
             res.status(500).json({
               mensagem: err,
               status: 'ER'
-            })
+            });
           });
-
-        }
-        next()
+        }        
       }
     })
   } catch (error) {
