@@ -17,7 +17,7 @@ exports.criarUsuario = (req, res, next) => {
     bcrypt.hash(req.body.senha, 10).then(hash => {
       const usuario = new Usuario({
         nomeCompleto: req.body.nomeCompleto,
-        email: req.body.email,
+        email: req.body.email.toLowerCase(),
         senha: hash,
         premium: 0
       });
@@ -91,8 +91,7 @@ exports.atualizarUsuario = (req, res, next) => {
   Usuario.findByIdAndUpdate({
     _id: req.userData.usuarioId
   }, {
-    nomeCompleto: req.body.nomeCompleto,
-    email: req.body.email
+    nomeCompleto: req.body.nomeCompleto    
   }, {
     upsert: true
   }, (err, retorno) => {
@@ -215,7 +214,7 @@ exports.login = (req, res, next) => {
   let consultaUsuario;
 
   Usuario.findOne({
-    email: req.body.email
+    email: req.body.email.toLowerCase()
   }).then(usuarioEncontrado => {
     if (!usuarioEncontrado) {
       return false;
@@ -270,7 +269,7 @@ exports.socialLogin = (req, res, next) => {
     }
 
     Usuario.findOne({
-      email: req.body.email
+      email: req.body.email.toLowerCase()
     }).then(retorno => {
       if (!retorno) {
         let usuario = new Usuario({
