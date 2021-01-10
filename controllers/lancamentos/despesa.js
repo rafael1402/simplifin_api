@@ -202,7 +202,6 @@ exports.verificaPeriodo = (req, res, next) => {
             status: 'ER'
           });
         }
-
         if (req.params.id) {
           Despesa.findOne({
             _criador: req.userData.usuarioId,
@@ -219,8 +218,9 @@ exports.verificaPeriodo = (req, res, next) => {
                 mensagem: "Lançamento não permitido. Data inferior à data de encerramento do período",
                 status: 'ER'
               });
+            } else {
+              next();
             }
-            next();
 
           }).catch(err => {
             res.status(500).json({
@@ -228,6 +228,8 @@ exports.verificaPeriodo = (req, res, next) => {
               status: 'ER'
             });
           });
+        } else {
+          next();
         }
       }
     })
